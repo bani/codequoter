@@ -1,9 +1,3 @@
-<div class="grid--full">
-  <div class="grid__item desk--hide breadcrumb breadcrumb--product">
-    {% include 'breadcrumb' %}
-  </div>
-</div>
-
 {% comment %}
   Gallery images
 {% endcomment %}
@@ -42,13 +36,7 @@
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}" />
   <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'grande' }}" />
 
-  <div class="grid--full">
-    <div class="grid__item palm--hide lap--hide desk--show breadcrumb">
-      {% include 'breadcrumb' %}
-    </div>
-  </div>
-
-  <h1 itemprop="name">{{ product.title }}</h1>
+  <h1 itemprop="name"><blockquote>{{ product.title }}</blockquote></h1>
   {% if product.vendor != shop.name %}
   <h3 itemprop="brand">{{ product.vendor | link_to_vendor }}</h3>
   {% endif %}
@@ -74,7 +62,7 @@
         </div>
       </div>
       <div class="grid__item one-half">
-        <button type="submit" name="add" value="Add to Bag" class="btn__shoppingbag">Add to Bag</button>
+        <button type="submit" name="add" value="Add to Bag" class="btn__shoppingbag">Buy</button>
       </div>
     </div>
   </form>
@@ -88,6 +76,7 @@
   {% if product.description != "" %}
   <div class="productpanel__description rte" itemprop="description">
     {{ product.description }}
+    <p>[<a href="/pages/shipping">Shipping Info</a>] [<a href="/pages/tshirt-size-chart">Size Charts</a>]</p>
   </div>
   {% endif %}
   

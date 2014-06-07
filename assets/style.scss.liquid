@@ -142,7 +142,7 @@ a:hover {
  */
 
 h1 {
-    font-size: 2em;
+    font-size: 1.5em;
     margin: 0.67em 0;
 }
 
@@ -1168,7 +1168,6 @@ h3 {
 h4 {
   color: $c-header;
   font: 16px $stack2;
-  text-transform: uppercase;
 
   a {
     font: inherit;
@@ -1259,7 +1258,6 @@ textarea {
 
 .collectioncover__text,
 .product__panel {
-  input,
   select,
   textarea {
     background-color: $c-back;
@@ -1307,6 +1305,35 @@ ul {
 }
 *:-ms-input-placeholder {
   color: get-control($c-back,40%);
+}
+
+blockquote {
+    display: block;
+    width: 220px;
+    text-align: center;
+}
+
+/* Quote Mark Styles */
+blockquote:before, blockquote:after {
+color: $c-arrow;
+display: block;
+font-size: 200%;
+width: 25px;
+}
+ 
+/* Left Quote */
+blockquote:before {
+    content: open-quote;
+    height: 0;
+    margin-left: -0.55em;
+}
+
+/* Right Quote */
+blockquote:after {
+    content: close-quote;
+    height: 25px;
+    margin-top: -10px;
+    margin-left: 225px;
 }
 
 /* -----------------
@@ -1634,6 +1661,7 @@ ul {
     font: 700 24px/30px $stack2;
     margin: 0;
     padding: 0;
+    text-transform: none;
   }
 
   h2 {
@@ -1646,7 +1674,6 @@ ul {
     font-style: normal;
     margin-bottom: 12px;
     padding-bottom: 12px;
-    text-transform: uppercase;
 
     a {
       border: 0;
@@ -2061,10 +2088,10 @@ ul {
   .rte h1 {
     border-bottom: 1px solid $c-border;
     color: $c-text;
-    font: 700 36px/42px $stack2;
+    font: 700 24px/28px $stack2;
     margin: 0 auto 24px;
     padding: 0 0 12px;
-    text-transform: uppercase;
+    text-transform: none;
   }
 }
 
@@ -2193,7 +2220,6 @@ ul.navfooter {
     color: $c-nav-text;
     font: 700 13px $stack2;
     font-style: normal;
-    text-transform: uppercase;
   }
 
   a:hover {
@@ -2786,7 +2812,6 @@ a.toggle__shoppingbag {
     font: 700 13px $stack2;
     font-style: none;
     text-decoration: none;
-    text-transform: uppercase;
   }
 
   span {
@@ -2798,7 +2823,6 @@ a.toggle__shoppingbag {
 .nav__primary {
   font: 14px $stack2;
   text-decoration: none;
-  text-transform: uppercase;
 }
 
 @media screen and ($bp-min: $bp-med) {
@@ -3175,7 +3199,6 @@ ul.navprimary__horizontal li a {
   p {
     font: bold 12px $stack2;
     margin: 0;
-    text-transform: uppercase;
   }
 }
 
@@ -3604,7 +3627,6 @@ ul.navprimary__horizontal li a {
   background-color: $c-nav-back;
   border-bottom: 1px solid get-control($c-nav-back,10%);
   font: 700 12px $stack2;
-  text-transform: uppercase;
 
   a,
   a:link,

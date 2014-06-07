@@ -54,15 +54,17 @@
 			                    </a>
 			                    <div class="product__info">
 			                        <div class="productinfo__text">
-			                            <h1><a href="{{ shop.url }}{{ product.url }}">{{ product.title }}</a></h1>
+			                            <h1><a href="{{ shop.url }}{{ product.url }}">{{ product.vendor }}</a></h1>
 			                            <h2>
+                                        {% if product.price > 0 %}
 										{% if product.compare_at_price %}
 											<span class="sale">{% if product.price_varies %}From {% endif %}{{ product.price | money }}</span>
 											<strike>{{ product.compare_at_price_max | money }}</strike>
 										{% else %}
 											{% if product.price_varies %}From {% endif %}{{ product.price | money }}
 										{% endif %}
-										</h2>
+										{% endif %}
+                                        </h2>
 			                        </div>
 			                    </div>
 			                </div>
