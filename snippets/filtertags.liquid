@@ -1,0 +1,14 @@
+{% if collection.all_tags.size > 0 %}
+	<div class="dropdowns__contain">
+		<select class="coll-filter">
+			<option value="/">See all</option>
+			{% for tag in collection.all_tags %}
+				{% if current_tags contains tag %}
+			    	<option value="{{ tag | handle }}" selected>{{ tag }}</option>
+			    {% else %}
+			    	<option value="{{ tag | handle }}">{{ tag }}</option>
+			    {% endif %}
+			{% endfor %}
+		</select>
+	</div>
+{% endif %}

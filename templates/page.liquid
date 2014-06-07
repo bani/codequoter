@@ -1,0 +1,16 @@
+{{ 'magnific-popup.css' | asset_url | stylesheet_tag }}
+{{ 'magnific-popup.js' | asset_url | script_tag }}
+        <section class="page">
+            <div class="page__inner">
+
+                <div class="page__text{% if settings.use_footer %} hasfooter{% endif %} rte">
+                	<h1>{{ page.title }}</h1>
+                    {{ page.content }}
+                </div>
+
+            </div>
+        </section>
+<script type="text/javascript">
+$(document).ready(function() { $('#tshirt').magnificPopup({type:'image'}); });
+$('#tshirt').magnificPopup({ type: 'image', closeOnContentClick: true, mainClass: 'mfp-img-mobile', image: { verticalFit: true } });
+</script>

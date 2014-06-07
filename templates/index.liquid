@@ -1,0 +1,158 @@
+		<section class="gallery{% if settings.use_footer %} hasfooter{% endif %}" itemscope itemtype="http://schema.org/WebPage">
+            <div class="gallery__inner">
+
+                {% if settings.sale_description != "" %}
+        	    <div class="tile__sale">
+                    <h1>{{ settings.sale_description }}</h1>
+                </div>
+               	{% endif %}
+
+				{% comment %}
+					Conditional deals with what content displays on the homepage
+				{% endcomment %}
+
+                {% if shop.products_count == 0 %}
+                	{% if settings.use_hpcontent == false and settings.use_imgbanner == false %}
+	                	<div class="gallery__slide--lonelypanel">
+		                    <div class="table__contain">
+		                        <div class="table__inner">
+		                            <div class="collectioncover__text">
+		                                <h2 class="single">This store currently has no products</h2>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+	                {% else %}
+						{% if settings.use_imgbanner == true %}
+							<div class="gallery__slide">
+								<img src="{{ 'imgbanner.png' | asset_url }}" alt="{{ shop.name }}" class="slide__image" />
+			                </div>
+		                {% endif %}
+
+						{% if settings.use_hpcontent == true and settings.hp_content != "" %}
+							<div class="gallery__slide slide__page">
+			                    <div class="desk--table__contain">
+			                        <div class="desk--table__inner">
+			                            <div class="collectioncover__text rte">
+			                                <h1>{{ pages[settings.hp_content].title }}</h1>
+			                                {{ pages[settings.hp_content].content }}
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+		                {% endif %}
+
+	                	<div class="gallery__slide slide__page">
+		                    <div class="table__contain">
+		                        <div class="table__inner">
+		                            <div class="collectioncover__text">
+		                                <h2 class="single">Your store currently has no products</h2>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+	                {% endif %}
+	            {% else %}
+					{% if settings.use_imgbanner == true %}
+						<div class="gallery__slide">
+							<img src="{{ 'imgbanner.png' | asset_url }}" alt="{{ shop.name }}" class="slide__image" />
+		                </div>
+	                {% endif %}
+
+					{% if settings.use_hpcontent == true and settings.hp_content != "" %}
+						<div class="gallery__slide slide__page">
+		                    <div class="desk--table__contain">
+		                        <div class="desk--table__inner">
+		                            <div class="collectioncover__text rte">
+		                                <h1>{{ pages[settings.hp_content].title }}</h1>
+		                                {{ pages[settings.hp_content].content }}
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+	                {% endif %}
+
+			        {% comment %}
+			        	Checks if there is a featured collection chosen in the settings. If there is, put it on the homepage. If not, display a note to choose one.
+			        {% endcomment %}
+
+			    	{% if settings.use_fpcollection == true %}
+		            	{% if settings.fp_collection == "" and collections.frontpage.products.size > 0 %}
+		            		{% assign doesfpexist = true %}
+	            			{% assign collection = collections.frontpage %}
+	            		{% else %}
+		            		{% assign doesfpexist = true %}
+							{% assign collection = collections.[settings.fp_collection] %}
+						{% endif %}
+						{% if collection.products.size == 0 %}
+							{% assign doesfpexist = false %}
+							<div class="gallery__slide--lonelypanel">
+			                    <div class="desk--table__contain">
+			                        <div class="desk--table__inner">
+			                            <div class="collectioncover__text">
+			                            	{% if collection.handle == "frontpage" %}
+			                                	<h2 class="single">Please <a href="/admin/collections">add a product</a> to your frontpage collection</a>.</h2>
+			                                {% else %}
+			                                	{% if settings.fp_collection == "" %}
+			                                		<h2 class="single">Please <a href="/admin/themes/{{ theme.id }}/settings">choose a collection to feature</a> on the homepage or add a product to your <a href="/admin/collections">frontpage collection</a>.</h2>
+			                                	{% else %}
+			                                		<h2 class="single">Please <a href="/admin/collections">add a product</a> to your featured collection.</h2>
+			                                	{% endif %}
+			                            	{% endif %}
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+		                {% else %}
+		                	{% if settings.rmv_covershp == false %}
+								{% if collection.image %}
+									<div class="gallery__slide collection__cover--img">
+					                    <img src="{{ collection.image | collection_img_url:'master' }}" class="slide__image">
+					                    <div class="table__contain">
+					                        <div class="table__inner">
+					                            <div class="collectioncover__text">
+					                            	{% include 'collectioncover' %}
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+				                {% else %}
+					                <div class="gallery__slide collection__cover">
+					                    <div class="desk--table__contain">
+					                        <div class="desk--table__inner">
+					                            <div class="collectioncover__text">
+					                            	{% include 'collectioncover' %}
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+				                {% endif %}
+			                {% endif %}
+		                {% endif %}
+		            {% else %}
+						<div class="gallery__slide--lonelypanel">
+		                    <div class="desk--table__contain">
+		                        <div class="desk--table__inner">
+		                            <div class="collectioncover__text">
+		                            	<h2 class="single">Please choose a collection to feature or add a page to display here in your <a href="/admin/themes/{{ theme.id }}/settings">theme settings</a>.</h2>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+			        {% endif %}
+
+	        		{% for product in collection.products %}
+		                <div class="gallery__slide toggle__productinfo">
+		                    <a href="{{ shop.url }}{{ product.url }}" class="product__link"></a>
+	                    	<img src="{% if product.images.size > 0 %}{{ product.images.first | product_img_url: 'master' }}{% else %}{{ 'image__empty.png' | asset_url }}{% endif %}" alt="{{ product.title | escape }}" class="slide__image">
+		                    <div class="product__info">
+		                        <div class="productinfo__text">
+		                            <h1><a href="{{ shop.url }}{{ product.url }}">{{ product.vendor }}</a></h1>
+		                        </div>
+		                    </div>
+		                </div>
+	                {% endfor %}
+	            {% endif %}
+
+            </div>
+        </section>

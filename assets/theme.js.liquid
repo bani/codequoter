@@ -1,0 +1,256 @@
+/*
+ * Vivetta JS. 2013
+*/
+
+// -------------------------------------------------------------------------------------
+// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+// -------------------------------------------------------------------------------------
+(function() {
+  var lastTime = 0;
+  var vendors = ['ms', 'moz', 'webkit', 'o'];
+  for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(callback, element) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+       timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function(id) {
+      clearTimeout(id);
+    };
+  }
+}());
+
+// -------------------------------------------------------------------------------------
+// Debounce function, taken from underscore.js
+// -------------------------------------------------------------------------------------
+debounce = function(func, wait, immediate) {
+  var result;
+  var timeout = null;
+  return function() {
+   var context = this, args = arguments;
+   var later = function() {
+    timeout = null;
+    if (!immediate) result = func.apply(context, args);
+   };
+   var callNow = immediate && !timeout;
+   clearTimeout(timeout);
+   timeout = setTimeout(later, wait);
+   if (callNow) result = func.apply(context, args);
+   return result;
+  };
+};
+
+
+// -------------------------------------------------------------------------------------
+// Variables
+// -------------------------------------------------------------------------------------
+var w = window.innerWidth,
+    desktopBreakPoint = 768;
+
+// -------------------------------------------------------------------------------------
+// Functions
+// -------------------------------------------------------------------------------------
+function updateCoverImages() {
+  var w = window.innerWidth;
+ if ( !w && w < desktopBreakPoint ) {
+  return;
+ }
+
+ $('.slide__image').each(function() {
+   var el = $(this),
+       iW = el.width();
+
+   el.parent().css('width', iW);
+ });
+
+};
+
+// -------------------------------------------------------------------------------------
+// General theme JS
+// -------------------------------------------------------------------------------------
+$(function() {
+
+  var navMenu = $('#navPrimary');
+
+  // Mobile menu toggle
+  $('#toggleMobileNav').click(function(e){
+    e.preventDefault();
+    navMenu.slideToggle(350);
+  });
+
+  // Force show/hide the menu based on screen width
+  function checkWidth() {
+   w = window.innerWidth;
+
+   if ( w >= desktopBreakPoint ) {
+     navMenu.show();
+   } else {
+     navMenu.hide();
+   }
+  };
+
+  // -------------------------------------------------------------------------------------
+  // Gallery specific functions
+  // -------------------------------------------------------------------------------------
+  var gallery = $('.gallery');
+  if (gallery.length) {
+
+    // Steal the scroll event for the gallery only
+    var movement = 0;
+    gallery.on('mousewheel', function(event) {
+      if ( w >= desktopBreakPoint ) {
+        event.preventDefault();
+        this.scrollLeft += (event.deltaY * event.deltaFactor);
+      };
+    });
+
+
+    // Keyboard/arrow scrolling
+    var currentScroll = 0,
+        isScrolling = false;
+
+    // Setup keyboard arrow scroll capability
+    $(document).keydown(function(event){
+      switch (event.keyCode) {
+        case 37: // left
+          event.preventDefault();
+          if (!isScrolling) {
+            isScrolling = true;
+            scrollGallery('left');
+          }
+          break;
+        case 39: // right
+          event.preventDefault();
+          if (!isScrolling) {
+            isScrolling = true;
+            scrollGallery('right');
+          }
+          break;
+      }
+    });
+
+    // Setup hover scroll capability if enabled in theme settings
+    {% if settings.addarrows %}
+      var leftArrow = '<div class="gallery-arrow gallery-left"></div>',
+          rightArrow = '<div class="gallery-arrow gallery-right"></div>',
+          autoInterval = null;
+
+      gallery.append(leftArrow).append(rightArrow);
+
+      var autoIncrement = 10,
+          intervalSpeed = 1;
+      $('.gallery-arrow').mouseenter(function() {
+        var el = $(this);
+        if (el.hasClass('gallery-left')) {
+          autoScrollGallery('left');
+        } else {
+          autoScrollGallery('right');
+        }
+      }).mouseleave(function() {
+        clearInterval(autoInterval);
+      });
+    {% endif %}
+
+    function autoScrollGallery(direction) {
+      if (isScrolling) return;
+
+      autoInterval = setInterval(function() {
+        switch(direction) {
+          case 'right':
+            gallery.scrollLeft(gallery.scrollLeft()+autoIncrement)
+            break;
+          case 'left':
+            var newLeft = gallery.scrollLeft()-autoIncrement > 0 ? (gallery.scrollLeft()-autoIncrement) : 0;
+            gallery.scrollLeft(newLeft);
+            break;
+        }
+      }, intervalSpeed);
+    }
+
+    function scrollGallery(dir, speed, amount) {
+      dir = dir ? dir : 'right';
+      speed = speed ? speed : 200;
+      amount = amount ? amount : 650;
+
+      switch(dir) {
+        case 'right':
+          gallery.animate({
+            scrollLeft: gallery.scrollLeft()+amount
+          }, speed, function() {
+            isScrolling = false;
+          });
+          break;
+        case 'left':
+          gallery.animate({
+            scrollLeft: gallery.scrollLeft()-amount > 0 ? (gallery.scrollLeft()-amount) : 0
+          }, speed, function() {
+            isScrolling = false;
+          });
+          break;
+      }
+    }
+
+  }
+
+  // Toggle product info
+  var toggleProductInfo = $('.toggle__productinfo');
+  if (toggleProductInfo.length) {
+    toggleProductInfo.hover(function() {
+     el = $(this);
+     tar = $('.product__info', el);
+
+     if ( w >= desktopBreakPoint ) {
+       tar.toggleClass('product__infoshow');
+     }
+    });
+  };
+
+  // -------------------------------------------------------------------------------------
+  // Functions run dependent on screen width. Must be updated on resizing.
+  // -------------------------------------------------------------------------------------
+  if ( $('html').hasClass('lt-ie9') ) {
+    // Update .slide__image parent on delay - hack for oldIE
+    setTimeout(function() {
+      updateCoverImages();
+    }, 400);
+
+  } else {
+    $(window).resize(function() {
+
+      // recheck side width
+      debounce( requestAnimationFrame(checkWidth), 250);
+
+      // Update cover image container on resize
+      debounce( requestAnimationFrame(updateCoverImages), 250);
+    });
+  }
+
+  // Check window width on load
+  checkWidth();
+
+  // -------------------------------------------------------------------------------------
+  // Wrap tables from the rich text editor so you can define a scrollable area
+  // -------------------------------------------------------------------------------------
+  $('.rte table').wrap('<div class="table-wrap"></div>');
+
+});
+
+// -------------------------------------------------------------------------------------
+// Once everything loaded, check image sizes
+// -------------------------------------------------------------------------------------
+$(window).load(function() {
+  updateCoverImages();
+});
