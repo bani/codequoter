@@ -16,7 +16,7 @@
                                 <div class="desk--table__inner">
                                     <p class="cart__title">
                                     <span class="icon__shopping-bag"></span>
-                                    My Bag
+                                    {{ settings.label_shoppingbag }}
                                     (<span class="cart-count">{{ cart.item_count }}</span>)
                                     </p>
                                 </div>
@@ -61,7 +61,7 @@
                     <li class="grid--full shoppinglist__product" data-id="{{ item.id }}">
                         <div class="grid__item lap--two-thirds desk--three-fifths">
                             <img src="{{ item.product.images.first | product_img_url: 'thumb' }}">
-                            <h3><a href="{{ item.product.url }}">{{ item.product.title }}</a></h3>
+                            <h4><a href="{{ item.product.url }}">{{ item.product.title }}</a></h4>
                             {% unless item.product.variants.size == 1 and item.variant.title contains 'Default Title' %}
                             <p>{{ item.variant.title }}</p>
                             {% endunless %}

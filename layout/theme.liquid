@@ -2,22 +2,25 @@
 <!--[if IE 7]><html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]><html class="lt-ie9" lang="en"> <![endif]-->
 <!--[if IE 9 ]><html class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+        {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+        </title>
         {% if page_description %}
-        <meta name="description" content="{{ page_description }}" />
+        <meta name="description" content="{{ page_description | escape }}" />
         {% endif %}
-        <title>{% if template == 'index' %}{% if page_title contains 'Welcome' %}{{ shop.name }} &ndash; Welcome{% else %}{{ page_title }}{% endif %}{% elsif template == '404' %}Page Not Found{% elsif page_title contains shop.name %}{{ page_title }}{% else %}{{ page_title }} &ndash; {{ shop.name }}{% endif %}</title>
         <link rel="canonical" href="{{ canonical_url }}" />
         {% if settings.use_favicon %}<link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />{% endif %}
-        {% if settings.font_one == "Arvo" or settings.font_two == "Arvo" %}<link href="//fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Cabin" or settings.font_two == "Cabin" %}<link href="//fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Lora" or settings.font_two == "Lora" %}<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Gudea" or settings.font_two == "Gudea" %}<link href="//fonts.googleapis.com/css?family=Gudea:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "PT Serif" or settings.font_two == "PT Serif" %}<link href="//fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Alegreya Sans" or settings.font_two == "Alegreya Sans" %}<link href="//fonts.googleapis.com/css?family=Alegreya+Sans:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Exo" or settings.font_two == "Exo" %}<link href="//fonts.googleapis.com/css?family=Exo:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Crimson Text" or settings.font_two == "Crimson Text" %}<link href="//fonts.googleapis.com/css?family=Crimson+Text:400,700,700italic,400italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Merriweather" or settings.font_two == "Merriweather" %}<link href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700italic,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Josefin Sans" or settings.font_two == "Josefin Sans" %}<link href="//fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Cardo" or settings.font_two == "Cardo" %}<link href="//fonts.googleapis.com/css?family=Cardo:400,400italic,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Ubuntu" or settings.font_two == "Ubuntu" %}<link href="//fonts.googleapis.com/css?family=Ubuntu:400,400italic,700" rel="stylesheet" type="text/css">{% endif %}
+        {% if settings.font_one == "Arvo" or settings.font_two == "Arvo" %}<link href="//fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Cabin" or settings.font_two == "Cabin" %}<link href="//fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Lora" or settings.font_two == "Lora" %}<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Gudea" or settings.font_two == "Gudea" %}<link href="//fonts.googleapis.com/css?family=Gudea:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "PT Serif" or settings.font_two == "PT Serif" %}<link href="//fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Alegreya Sans" or settings.font_two == "Alegreya Sans" %}<link href="//fonts.googleapis.com/css?family=Alegreya+Sans:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Exo" or settings.font_two == "Exo" %}<link href="//fonts.googleapis.com/css?family=Exo:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Crimson Text" or settings.font_two == "Crimson Text" %}<link href="//fonts.googleapis.com/css?family=Crimson+Text:400,700,700italic,400italic" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Merriweather" or settings.font_two == "Merriweather" %}<link href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700italic,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Josefin Sans" or settings.font_two == "Josefin Sans" %}<link href="//fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet" type="text/css">{% endif %}{% if settings.font_one == "Cardo" or settings.font_two == "Cardo" %}<link href="//fonts.googleapis.com/css?family=Cardo:400,400italic,700" rel="stylesheet" type="text/css">{% endif %}
+
+        {{ "style.scss.css" | asset_url | stylesheet_tag }}
 
         {{ content_for_header }}
 
-        {{ "style.scss.css" | asset_url | stylesheet_tag }}
         {{ "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js" | script_tag }}
 
         {% assign respond_js_secret_key = (shop.domain | md5) %}
@@ -28,19 +31,9 @@
             <link href="{{ shop.url }}/search?q={{ respond_js_secret_key }}" id="respond-redirect" rel="respond-redirect" />
             <script src="{{ shop.url }}/search?q={{ respond_js_secret_key }}" type="text/javascript"></script>
         <![endif]-->
-        <meta property="og:title" content="Code Quoter" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://codequoter.com" />
-        <meta property="og:image" content="http://cdn.shopify.com/s/files/1/0402/9449/t/2/assets/dark-bg-300.png" />
-        <meta property="fb:admins" content="641688377"/>
-        <meta property="og:description" content="{{ page_description }}"/>
     </head>
 
-    {% if template contains 'cart' %}
-        <body class="template-cart">
-    {% else %}
-        <body>
-    {% endif %}
+    <body class="template-{{ template }}">
 
         <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -48,8 +41,8 @@
 
         <!-- Fixed top bar -->
         <header class="site-nav">
-            <div class="desk--floatLeft">
-                <div class="branding palm--hide lap--hide desk--show">
+            <div class="desk--floatLeft site-nav--item">
+                <div class="branding desk--show">
                     <div class="desk--table__contain">
                         <div class="desk--table__inner">
                             {% if settings.use_logo == true %}
@@ -65,85 +58,39 @@
                     </div>
                 </div>
             </div>
-            <div class="desk--floatLeft">
+            <div class="desk--floatLeft site-nav--item site-nav--item-fade">
                 <div class="desk--table__contain">
                     <div class="desk--table__inner">
                         <nav id="navPrimary" class="nav__primary">
                             <ul class="navprimary__horizontal">
-                                {% assign limitset = settings.limitnavby | times: 1 %}
-                                {% assign linklistsize = linklists.main-menu.links.size %}
-                                {% if settings.limitnav == true %}
-                                    {% for link in linklists.main-menu.links | limit: limitset %}
-                                        <li{% if forloop.last %}{% if linklistsize < limitset or linklistsize == limitset %} class="last"{% endif %}{% endif %}>
-                                            {% assign child_list_handle = link.title | handleize %}
+                                {% assign maxNavItems = 4 %}
+                                {% for link in linklists.main-menu.links %}
+                                    <li class="nav__primary--item {% if forloop.index > maxNavItems or forloop.index == maxNavItems %}nav__primary--item-extra{% endif %}">
+                                        {% assign child_list_handle = link.title | handleize %}
 
-                                            {% if linklists[child_list_handle].links != blank %}
-                                                <a href="{{ link.url }}">{{ link.title }}</a>
-                                                <ul class="dropdown">
-                                                    {% for childlink in linklists[child_list_handle].links %}
-                                                    <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
-                                                    {% endfor %}
-                                                </ul>
-
-                                            {% else %}
-                                                <a href="{{ link.url }}">{{ link.title | escape }}</a>
-                                            {% endif %}
-                                        </li>
-                                    {% endfor %}
-                                    {% if linklistsize > limitset %}
-                                    <li class="last navprimary__hidepalm">
-                                        <a href="">More</a>
-                                        <ul class="dropdown">
-                                            {% for link in linklists.main-menu.links | offset: limitset %}
-                                            <li{% if forloop.last %} class="last"{% endif %}>
-                                                {% assign child_list_handle = link.title | handleize %}
-
-                                                {% if linklists[child_list_handle].links != blank %}
-                                                    <a href="{{ link.url }}">{{ link.title }}</a>
-                                                    <ul class="dropdown2">
-                                                        {% for childlink in linklists[child_list_handle].links %}
-                                                        <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
-                                                        {% endfor %}
-                                                    </ul>
-
-                                                {% else %}
-                                                    <a href="{{ link.url }}">{{ link.title | escape }}</a>
-                                                {% endif %}
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
+                                        {% if linklists[child_list_handle].links != blank %}
+                                            <a href="{{ link.url }}">{{ link.title }}</a>
+                                            <ul class="dropdown">
+                                                {% for childlink in linklists[child_list_handle].links %}
+                                                <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                                        {% endif %}
                                     </li>
+                                {% endfor %}
 
-                                    <li class="navprimary__showpalm">
-                                        <ul class="dropdown">
-                                            {% for link in linklists.main-menu.links | offset: limitset %}
-                                            <li{% if forloop.last %} class="last"{% endif %}>
-                                                {% assign child_list_handle = link.title | handleize %}
-
-                                                {% if linklists[child_list_handle].links != blank %}
-                                                    <a href="{{ link.url }}">{{ link.title }}</a>
-                                                    <ul class="dropdown2">
-                                                        {% for childlink in linklists[child_list_handle].links %}
-                                                        <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
-                                                        {% endfor %}
-                                                    </ul>
-
-                                                {% else %}
-                                                    <a href="{{ link.url }}">{{ link.title | escape }}</a>
-                                                {% endif %}
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                    {% endif %}
-                                {% else %}
-                                    {% for link in linklists.main-menu.links %}
+                                <li class="navprimary__hidepalm nav__primary--more">
+                                    <a href="#">More</a>
+                                    <ul class="dropdown">
+                                        {% for link in linklists.main-menu.links offset: 4 %}
                                         <li{% if forloop.last %} class="last"{% endif %}>
                                             {% assign child_list_handle = link.title | handleize %}
 
                                             {% if linklists[child_list_handle].links != blank %}
                                                 <a href="{{ link.url }}">{{ link.title }}</a>
-                                                <ul class="dropdown">
+                                                <ul class="dropdown2">
                                                     {% for childlink in linklists[child_list_handle].links %}
                                                     <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
                                                     {% endfor %}
@@ -153,8 +100,11 @@
                                                 <a href="{{ link.url }}">{{ link.title | escape }}</a>
                                             {% endif %}
                                         </li>
-                                    {% endfor %}
-                                {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+
+
                                 {% if settings.social_display == "header" %}
                                     {% if settings.facebook_url != "" %}
                                         <li class="social--margin palm--hide lap--hide"><a href="{{ settings.facebook_url }}" class="facebook"><span class="icon__facebook"></span></a></li>
@@ -193,7 +143,7 @@
                     </div>
                 </div>
             </div>
-            <div class="desk--floatRight">
+            <div class="desk--floatRight site-nav--item site-nav--item-fade">
                 <div class="desk--table__contain">
                     <div class="desk--table__inner">
                         <div class="site-nav__mobilebar">
@@ -246,7 +196,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="branding palm--show lap--show desk--hide">
+                        <div class="branding portable--show">
                             {% if settings.use_logo %}
                                 <a class="branding__logo" href="/" role="banner">
                                     {{ 'logo.png' | asset_url | img_tag: shop.name }}
@@ -273,14 +223,6 @@
             <div class="desk--floatLeft">
                 <div class="desk--table__contain">
                     <div class="desk--table__inner">
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=116952341696384";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
                         <ul class="horizontal navfooter">
                             {% for link in linklists.footer.links %}
                                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -303,12 +245,10 @@
                                         <li class="social--margin"><a href="{{ settings.instagram_url }}" class="instagram"><span class="icon__instagram"></span></a></li>
                                     {% endif %}
                                     {% if settings.pinterest_url != "" %}
-                                        <li class="social--margin"><a href="{{ settings.pinterest_url }}" class="pinterest"><span class="icon__pinterest"></span></a>
-                                        </li>
+                                        <li class="social--margin"><a href="{{ settings.pinterest_url }}" class="pinterest"><span class="icon__pinterest"></span></a></li>
                                     {% endif %}
                                     {% if settings.google_url != "" %}
-                                        <li class="social--margin"><a href="{{ settings.google_url }}" class="googleplus"><span class="icon__googleplus"></span></a>
-                                        </li>
+                                        <li class="social--margin"><a href="{{ settings.google_url }}" class="googleplus"><span class="icon__googleplus"></span></a></li>
                                     {% endif %}
                                 </ul>
                             </nav>
@@ -317,11 +257,10 @@
                 </div>
             </div>
             <div class="desk--floatRight">
-                  <div class="desk--table__contain">
-                    <div class="desk--table__inner" style="padding-right: 16px;">
-                      <p class="copy"><a href="http://www.shopify.ca/?ref=bani" target="_blank">Powered by Shopify</a>. &copy; Copyright {{ shop.name }}</p>
+                <div class="desk--table__contain">
+                    <div class="desk--table__inner">
+                        <p class="copy">{{ powered_by_link }}. &copy; Copyright {{ shop.name }}</p>
                     </div>
-                    <div class="desk--table__inner"><div class="fb-like" data-href="http://www.facebook.com/codequoter" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div>
                 </div>
             </div>
 
@@ -417,38 +356,69 @@
         {% endcomment %}
         {{ 'ajaxify.js' | asset_url | script_tag }}
         <script>
-            jQuery(function($) {
-                ajaxifyShopify.init({
-                    addToCartSelector: '.btn__shoppingbag',
-                    toggleCartButton: '.toggle__shoppingbag',
-                    cartCountSelector: '.cart-count'
-                });
+          jQuery(function($) {
+            // Ajaxify the cart.
+            ajaxifyShopify.init({
+               addToCartSelector: '.btn__shoppingbag',
+               toggleCartButton: '.toggle__shoppingbag',
+               cartCountSelector: '.cart-count'
             });
+          });
         </script>
 
+        {% if template == 'index' or template contains 'collection' %}
+        {% comment %}
+            Collection filtering by tags and sorting.
+        {% endcomment %}
         <script>
-            var collFilters = jQuery('.coll-filter');
-            collFilters.change(function() {
-                var newTags = [];
-                collFilters.each(function() {
-                    if (jQuery(this).val()) {
-                        newTags.push(jQuery(this).val());
-                    }
-                });
-                if (newTags.length) {
-                    var query = newTags.join('+');
-                    window.location.href = jQuery('{{ 'tag' | link_to_tag: 'tag' }}').attr('href').replace('tag', query);
-                } else {
-                    {% if collection.handle %}
-                        window.location.href = '/collections/{{ collection.handle }}';
-                    // {% elsif collection.products.first.type == collection.title %}
-                        // window.location.href = '{{ collection.title | url_for_type }}';
-                    {% elsif collection.products.first.vendor == collection.title %}
-                        // window.location.href = '{{ collection.title | url_for_vendor }}';
-                    {% endif %}
-                };
-            });
+        Shopify.queryParams = {};
+        if (location.search.length) {
+          for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+            aKeyValue = aCouples[i].split('=');
+            if (aKeyValue.length > 1) {
+              Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+            }
+          }
+        }
+        var collFilters = jQuery('.coll-filter');
+        collFilters.change(function() {
+          var newTags = [];
+          var newURL = '';
+          collFilters.each(function() { 
+            if (jQuery(this).val()) {
+              newTags.push(jQuery(this).val());
+            }
+          });
+          {% if collection.handle %}
+          newURL = '/collections/' + '{{ collection.handle }}';
+          if (newTags.length) {
+            newURL += '/' + newTags.join('+');
+          }
+          var search = jQuery.param(Shopify.queryParams);
+          if (search.length) {
+            newURL += '?' + search;
+          }
+          location.href = newURL;    
+          {% else %}
+          if (newTags.length) {
+            Shopify.queryParams.constraint = newTags.join('+');        
+          }
+          else {
+            delete Shopify.queryParams.constraint;
+          }
+          location.search = jQuery.param(Shopify.queryParams);
+          {% endif %}      
+        });
+        {% if template contains 'collection' %}
+        jQuery('.coll-sort')
+          .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+          .on('change', function() {
+            Shopify.queryParams.sort_by = jQuery(this).val();
+            location.search = jQuery.param(Shopify.queryParams);
+          });
+        {% endif %}
         </script>
+        {% endif %}
 
     </body>
 </html>

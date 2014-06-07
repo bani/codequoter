@@ -140,7 +140,7 @@ Shopify.updateCartNote = function(note, callback) {
 Shopify.onError = function(XMLHttpRequest, textStatus) {
   var data = eval('(' + XMLHttpRequest.responseText + ')');
   if (!!data.message) {
-    // alert(data.message + '(' + data.status  + '): ' + data.description);
+    alert(data.message + '(' + data.status  + '): ' + data.description);
   } else {
     alert('Error : ' + Shopify.fullMessagesFromErrors(data).join('; ') + '.');
   }
@@ -330,7 +330,6 @@ var ajaxifyShopify = (function(module, $) {
 
     // Run this function in case we're using the quantity selector outside of the cart
     adjustCart();
-
   };
 
   updateCountPrice = function (cart) {
@@ -369,11 +368,9 @@ var ajaxifyShopify = (function(module, $) {
   };
 
   drawerSetup = function () {
-
     /* This function is completely changed from the original.
      * Vivetta has its own drawer structure, so we don't need to create one.
-     *
-   */
+     */
 
     // Drawer selectors
     $drawerContainer = $('#shoppingBag');
@@ -393,19 +390,19 @@ var ajaxifyShopify = (function(module, $) {
     $drawerContainer.addClass('shoppingbagshow');
 
     scrollTop();
-
   };
 
   hideDrawer = function () {
     $drawerContainer.removeAttr('style').removeClass('shoppingbagshow');
 
     scrollTop();
-
   };
 
   formOverride = function () {
     $formContainer.submit(function(e) {
       e.preventDefault();
+      // Remove any previous quantity errors
+      $('.qty-error').remove();
       Shopify.addItemFromForm(e.target, itemAddedCallback, itemErrorCallback);
     });
 
@@ -415,8 +412,13 @@ var ajaxifyShopify = (function(module, $) {
     Shopify.getCart(cartUpdateCallback);
   };
 
-  itemErrorCallback = function (error) {
-
+  itemErrorCallback = function (XMLHttpRequest, textStatus) {
+    var data = eval('(' + XMLHttpRequest.responseText + ')');
+    if (!!data.message) {
+      if (data.status == 422) {
+        $formContainer.append('<p class="qty-error">'+ data.description +'</p>')
+      }
+    }
   };
 
   cartUpdateCallback = function (cart) {
@@ -428,7 +430,6 @@ var ajaxifyShopify = (function(module, $) {
   };
 
   refreshCart = function (cart) {
-
     $drawerContainer.load('/cart #shoppingBagInner', function() {
       log('cart loaded from /cart');
 
@@ -438,13 +439,11 @@ var ajaxifyShopify = (function(module, $) {
       // With new elements we need to relink the adjust cart functions
       adjustCart();
     });
-
   };
 
   adjustCart = function () {
     // This function only runs if the entire cart is reprinted.
     // To be safe, turn off the previous clicks that were assigned.
-
     var qtyAdjust = $('.qty__sub, .qty__add');
 
     // Add or remove from the quantity
@@ -518,7 +517,6 @@ var ajaxifyShopify = (function(module, $) {
 
     // Reset toggle buttons
     setToggleButtons();
-
   };
 
   adjustCartCallback = function (cart) {
@@ -532,7 +530,6 @@ var ajaxifyShopify = (function(module, $) {
 
     // Reprint cart
     Shopify.getCart(refreshCart);
-
   };
 
   scrollTop = function () {
@@ -541,7 +538,6 @@ var ajaxifyShopify = (function(module, $) {
         scrollTop: 0
       }, 250, 'swing');
     }
-
   };
 
   isEmpty = function(el) {
@@ -555,7 +551,6 @@ var ajaxifyShopify = (function(module, $) {
       }
       catch (e) {}
     }
-
   };
 
   module = {

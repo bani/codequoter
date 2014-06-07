@@ -25,8 +25,7 @@
 						</div>
 						<div class="grid__item desk--three-quarters blog__content rte">
 							<h2 class="palm--hide lap--hide desk--show blog__title">{{ article.title }}</h2>
-							{{ article.excerpt_or_content }}
-							{% if article.excerpt != blank %}<p><a href="{{ article.url }}">Read more →</a></p>{% endif %}
+							{{ article.content }}
 						</div>
 					</div>
 					{% include 'like-article' %}
@@ -58,7 +57,7 @@
 						{% endif %}
 
 						<div class="comment__form">
-							{% form article %}
+							{% form "new_comment", article %}
 							<h2>Leave a comment</h2>
 
 							{% if form.errors %}
